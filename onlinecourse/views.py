@@ -147,11 +147,15 @@ def show_exam_result(request, course_id, submission_id):
     context = {}
     template_name = 'onlinecourse/course_list_bootstrap.html'
     total_score = 0
-    selected_ids = submission.choice_set.all().values_list('id')
+    selected_ids = submission.choice.all().values_list('id')
+    selected_choice_text = submission.choice.all().values_list('choice_text')
     print('selected_ids:',selected_ids)
+    print('selected_choice_text:',selected_choice_text)
     for question in course.question_set.all():
-        if question.is_get_score()
+        print(question.question_text)
+        if question.is_get_score(selected_ids):
             total_score += question.grade
+    context['user']=request.user
     context['course']=course
     context['selected_ids']=selected_ids
     context['total_score']=total_score
@@ -159,4 +163,4 @@ def show_exam_result(request, course_id, submission_id):
     #for choice in submission.
 
 
-#
+#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

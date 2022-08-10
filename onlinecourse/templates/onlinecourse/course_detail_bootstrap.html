@@ -71,8 +71,8 @@
                 {% if user.is_authenticated %}
                 <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post"> <!-- point to a submit view -->
                     <!-- ... for each question in the course ... -->
-                    {% for question in course.question_set.all %}
-                        <div class="card mt-1">
+                    <div class="card mt-1">
+                        {% for question in course.question_set.all %}
                             <div class="card-header"><h5>{{ question.question_text}}</h5></div>
                                 {% csrf_token %}
                                 <div class="form-group">
@@ -88,9 +88,10 @@
                                 {% endfor %} 
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                    <input class="btn btn-success btn-block" type="submit" value="Submit">
+                        {% endfor %}
+                        <input class="btn btn-success btn-block" type="submit" value="Submit">
+                    </div>
+                    
                 </form>
                 {% endif %}
                 <!--Check here to see more details Bootstrap checkbox
