@@ -149,8 +149,8 @@ def show_exam_result(request, course_id, submission_id):
     total_score = 0
     selected_ids = submission.choice.all().values_list('id',flat=True)
     selected_choice_text = submission.choice.all().values_list('choice_text',flat=True)
-    print('selected_ids:',selected_ids)
-    print('selected_choice_text:',selected_choice_text)
+    # print('selected_ids:',selected_ids)
+    # print('selected_choice_text:',selected_choice_text)
     for question in course.question_set.all():
         # print(question.question_text)
         if question.is_get_score(selected_ids):
