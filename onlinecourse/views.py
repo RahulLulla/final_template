@@ -114,13 +114,15 @@ def submit(request, course_id):
     user = request.user
     course = get_object_or_404(Course, pk=course_id)
     enrollment = Enrollment.objects.get(user=user, course=course)
+    submission = Submission.objects.create(enrollment=enrollment)
     for key in request.POST:
-        submission = Submission.objects.create(enrollment=enrollment)
         if key.startswith('choice'):
            value = request.POST[key]
            choice_id = int(value)
+           print(value,'choice_id',choice_id)
            choice = get_object_or_404(Choice, pk=choice_id)
-           submission.choice = choice
+           print(choice.choice_text)
+           submission.choice.add(choice)
            submission.save()
     return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(course.id,submission.id)))
     
@@ -143,6 +145,10 @@ def submit(request, course_id):
 def show_exam_result(request, course_id, submission_id):
     course = get_object_or_404(Course, pk=course_id)
     submission = get_object_or_404(Submission, pk=submission_id)
+    context = {}
+    template_name = 'onlinecourse/course_list_bootstrap.html'
+    # for choice in submission.choice_set.all()
+    #     if choice.
     #for choice in submission.
 
 
