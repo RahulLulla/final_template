@@ -119,9 +119,8 @@ def submit(request, course_id):
         if key.startswith('choice'):
            value = request.POST[key]
            choice_id = int(value)
-           print(value,'choice_id',choice_id)
            choice = get_object_or_404(Choice, pk=choice_id)
-           print(choice.choice_text)
+        #    print(choice.choice_text)
            submission.choice.add(choice)
            submission.save()
     return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(course.id,submission.id)))
@@ -147,8 +146,17 @@ def show_exam_result(request, course_id, submission_id):
     submission = get_object_or_404(Submission, pk=submission_id)
     context = {}
     template_name = 'onlinecourse/course_list_bootstrap.html'
-    # for choice in submission.choice_set.all()
-    #     if choice.
+    total_score = 0
+    selected_ids = submission.choice_set.all().values_list('id')
+    print('selected_ids:',selected_ids)
+    for question in course.question_set.all():
+        if question.is_get_score()
+            total_score += question.grade
+    context['course']=course
+    context['selected_ids']=selected_ids
+    context['total_score']=total_score
+    return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
     #for choice in submission.
 
 
+#
